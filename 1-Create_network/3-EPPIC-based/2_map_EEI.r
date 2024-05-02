@@ -32,6 +32,7 @@ cppFunction("List getexons(CharacterVector id1, CharacterVector id2, CharacterVe
 
 allmaps <- list.files('../data/uniprot_EnsemblExonPDB_map', full.names=TRUE)
 
+## These pdb ids were not processed by the EPPIC software
 not_captured <- c("1n6j", "6l9z", "2as5", "2j6f", "5jcz", "2j6o", "7aew", "6xdl")
 
 inputDir <- '../data/EPPIC/'
