@@ -54,6 +54,3 @@ for(k in 1:length(allfiles)){
 	cat(k,' of ', length(allfiles), ' done\n')
 
 }
-
-
-

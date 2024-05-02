@@ -23,8 +23,9 @@ allfiles <- list.files(cif_folder, full.names=TRUE)
 
 for(k in 1:length(allfiles1)){
 
-	#if((k==810) | (k==930)| (k==1320)| (k==1321)| (k==1385)| (k==1386)| (k==2914)| (k==3908)){next}# 
+	# if((k==810) | (k==930)| (k==1320)| (k==1321)| (k==1385)| (k==1386)| (k==2914)| (k==3908)){next}# 
 	## skipped because allmap dataframe has duplicates because of "letter-code" of PDB author being missed by CIF formatting --> Database entry problem
+	## Now automatically handled later int he code --> line 91
 
 	temp <- strsplit(basename(allfiles1[k]),'[_]')[[1]]
 	temp_uni <- temp[1]
@@ -39,7 +40,11 @@ for(k in 1:length(allfiles1)){
 	tfile0 <- trimws(tfile[wh])
 	whh1 <- which(tfile0 == "_atom_site.group_PDB")
 	start <- wh[whh1]
-	end <- wh[whh1+1]-1-2
+	if(whh1 == length(wh)){
+		end <- length(tfile)
+	}else{
+		end <- wh[whh1+1]-1-2
+	}
 
 	# Extract the coordinates part of the PDB file
 	tfile <- tfile[start:end]
@@ -87,6 +92,7 @@ for(k in 1:length(allfiles1)){
 		whi <- intersect(tempnum, tfile4[[2]])
 		wh1 <- which(tempnum %in% whi)
 		wh2 <- which(tfile4[[2]] %in% whi)
+		if(length(wh1)!= length(wh2)){next}## skipping cases where PDBResNum has a character but that is not always present in the CIF file
 		toadd[wh1] <- tfile4[[1]][wh2]
 
 		allmap$PDBResNumCIF <- toadd

@@ -125,4 +125,3 @@ for(k in 1:length(pdbids1)){
 	cat('Protein ', k, ' of ', length(pdbids1), ' done\n')
 
 }
-

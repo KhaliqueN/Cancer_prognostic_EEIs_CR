@@ -87,7 +87,7 @@ afile2$chain2 <- unlist(lapply(strsplit(afile2[[2]], '[_]'), '[[', 2))
 temp_pdb <- unique(afile2[[3]])
 
 pdbDirectory <- '../data/PDB_CIF'
-cutoff <- c(4, 5, 6, 7, 8)
+cutoff <- c(6)#c(4, 5, 6, 7, 8)
 
 for(mm in 1:length(cutoff)){
 
@@ -106,7 +106,11 @@ for(mm in 1:length(cutoff)){
 		tfile0 <- trimws(tfile[wh])
 		whh1 <- which(tfile0 == "_atom_site.group_PDB")
 		start <- wh[whh1]
-		end <- wh[whh1+1]-1-2
+		if(whh1 == length(wh)){
+			end <- length(tfile)
+		}else{
+			end <- wh[whh1+1]-1-2
+		}
 
 		# Extract the coordinates part of the PDB file
 		tfile <- tfile[start:end]

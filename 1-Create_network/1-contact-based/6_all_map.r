@@ -76,4 +76,3 @@ for(k in 1:length(allfiles1)){
 allpdbs <- unique(unlist(lapply(strsplit(basename(allfiles1), '[_]'), '[[', 2)))
 data.table::fwrite(data.frame(allpdbs), '../data/allPDB_IDs.txt', col.names=FALSE, row.names=FALSE, quote=FALSE)
 
-

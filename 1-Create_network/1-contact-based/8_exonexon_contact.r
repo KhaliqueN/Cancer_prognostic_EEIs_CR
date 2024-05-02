@@ -49,7 +49,7 @@ fwrite(cmx_f, '../data/uniprot_pdb_Ensembl_finalized.txt', sep='\t', row.names=F
 ####----------------------------------------------------------------------------------------------------
 ## Also check whether the protein is mapped to the PDB ID as per SIFTS mapping
 
-cutoff <- c(4, 5, 6, 7, 8)
+cutoff <- c(6)#c(4, 5, 6, 7, 8)
 
 for(uu in 1:length(cutoff)){
 

@@ -55,8 +55,8 @@ cppFunction("List filtereei(CharacterVector ex1, CharacterVector ex2, CharacterV
   
 }")
 
-cutoff <- c(4, 5, 6, 7, 8)
-num_aa <- c(1,3,5,7,9)
+cutoff <- c(6)#c(4, 5, 6, 7, 8)
+num_aa <- c(1)#c(1,3,5,7,9)
 
 for(k in 1:length(cutoff)){
 

@@ -20,7 +20,7 @@ allfiles <- list.files(uniprot_HS_dir, full.names=TRUE)
 output_file <- '../data/uniprot_sequences_HS.txt'
 if(file.exists(output_file)){file.remove(output_file)}
 
-## save all sequences in a vector
+# save all sequences in a vector
 uniseq_aa <- list()
 for(k in 1:length(allfiles)){
 
@@ -44,7 +44,7 @@ for(k in 1:length(allfiles)){
 
 
 ###########################################################################################################
-##-- create a mapping of gene name, uniprot ids, geneid, pdb ids, start, and end of the uniprot sequence --
+# create a mapping of gene name, uniprot ids, geneid, pdb ids, start, and end of the uniprot sequence
 
 cppFunction("List unimappdb1(CharacterVector pdbc, CharacterVector tempuni, NumericVector resolution, NumericVector start, NumericVector end, CharacterVector exp){
 
@@ -369,12 +369,12 @@ for(k in 1:length(allpdbsu[[1]])){
 cmx_data1 <- data.frame(ID=pdbid, RESOL=resol, PROTEIN1=p1, CHAIN1=chainid1, START1=st1, END1=ed1,
 	PROTEIN2=p2, CHAIN2=chainid2, START2=st2, END2=ed2)
 
-##-- unique complexes ---
+##--unique complexes
 cmx1 <- igraph::simplify(igraph::graph_from_data_frame(cmx_data1[,c(3,7)], directed=FALSE))
 cmx11 <- igraph::as_data_frame(cmx1)
 
 
-##--- choose a pdb id for each complex -----
+##---choose a pdb id for each complex -----
 allData <- data.frame(matrix(ncol=length(cmx_data1), nrow=0))
 for(k in 1:length(cmx11[[1]])){
 	x <- cmx11[[1]][k]
