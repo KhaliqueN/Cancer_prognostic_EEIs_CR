@@ -12,7 +12,7 @@ source("eein_cancer_util.r")
 
 saveDirectory <- '../data/PISA_networks'
 dir.create(saveDirectory, recursive=TRUE)
-pval_thres <- c(0.5)
+pval_thres <- c(0.5)#seq(0.02,0.5,0.02)
 
 allpdbs <- data.table::fread('../data/uniprot_pdb_Ensembl_finalized.txt', header=TRUE)[[1]]
 
