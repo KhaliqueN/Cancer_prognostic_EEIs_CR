@@ -14,9 +14,6 @@ library('biomaRt')
 
 cpm_threshold <- 0.5
 
-# ls1 <- lost_surv1
-# gs1 <- gained_surv1
-
 save_bioCRPEs <- function(ls1, gs1, c_type){
 
     # c_type <- cancer_type[gg]
@@ -128,19 +125,15 @@ save_bioCRPEs <- function(ls1, gs1, c_type){
 
 
 ###--- map to survival analysis by Smith et al -----
-# ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
-# attrs <- c('hgnc_symbol', 'uniprotswissprot', 'description')
+ensembl <- useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+attrs <- c('hgnc_symbol', 'uniprotswissprot', 'description')
 survival <- data.table::fread('../data/survival_analysis_all.txt', sep='\t')
 allc <- colnames(survival)[-1]
 allgenes <- survival[[1]]## 20,531 genes
-# alld <- getBM(attributes=attrs, filters='hgnc_symbol', values=allgenes, mart=ensembl) 
-# alldd <- alld[alld$uniprotswissprot != '',]
-# data.table::fwrite(alldd, '../data/gene_map.txt', row.names=FALSE, sep='\t', quote=FALSE)
+alld <- getBM(attributes=attrs, filters='hgnc_symbol', values=allgenes, mart=ensembl) 
+alldd <- alld[alld$uniprotswissprot != '',]
+data.table::fwrite(alldd, '../data/gene_map.txt', row.names=FALSE, sep='\t', quote=FALSE)
 alldd <- data.table::fread('../data/gene_map.txt')
-# alldd <- data.table::fread('../data/human_uniprot_gene_name.tsv')
-# alldd <- alldd[,-2]
-# colnames(alldd) <- c('uniprotswissprot','hgnc_symbol','KEGG')
-# alldd <- alldd[alldd$hgnc_symbol != '',]
 survival <- survival[,-1]
 
 ###----------------------------------------------------
@@ -269,23 +262,23 @@ for(qq in 3:length(allnets)){
 
     pdata <- data.frame(Cancer=cancer, cutoff=as.factor(q_cutoff), biom=pert_bio)
 
-    pdata$score <- cut(pdata$biom, breaks = c(0,5,10, 20,50,100,200,600), include.lowest=TRUE)
-    cols <- c('#fff5eb','#fee6ce','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801')#,'#a63603','#7f2704']
+    # pdata$score <- cut(pdata$biom, breaks = c(0,5,10, 20,50,100,200,600), include.lowest=TRUE)
+    # cols <- c('#fff5eb','#fee6ce','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801')#,'#a63603','#7f2704']
 
-    p <- ggplot(pdata, aes(Cancer,cutoff)) + 
-    geom_tile(aes(fill = cutoff),colour = "white")+
-    theme(legend.text=element_text(size=10))
-    basesize <- 10
-    p <- p + theme_bw(base_size = basesize * 0.8) +
-    scale_x_discrete(name="Cancer type") + 
-    scale_y_discrete(name="Fraction of \nrandom experiments") +
-    scale_fill_manual(values=cols,drop=FALSE)+
-    geom_text(data=pdata,aes(y=cutoff,label=biom),size=2.5)+    # scale_color_manual(values=c('#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#ffff99','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#e31a1c','#b15928','black','#9e0142','#053061'))+
-    theme(axis.text.x = element_text(size = basesize * 0.6, angle = 60, hjust = 0.5,vjust=0.5, colour = "black"),
-    axis.text.y = element_text(size = basesize * 0.6, angle = 0, hjust = 0.5,vjust=0.5, colour = "black"), 
-    strip.text = element_text(size = basesize * 0.8), axis.title=element_text(basesize * 0.8))+
-    guides(fill='none')
-    ggsave(p,filename=paste0("../results/Final_results/",net_type[qq],"_BioCRPE_variation.png"),width=4.5, height=2.5, dpi=400)
+    # p <- ggplot(pdata, aes(Cancer,cutoff)) + 
+    # geom_tile(aes(fill = cutoff),colour = "white")+
+    # theme(legend.text=element_text(size=10))
+    # basesize <- 10
+    # p <- p + theme_bw(base_size = basesize * 0.8) +
+    # scale_x_discrete(name="Cancer type") + 
+    # scale_y_discrete(name="Fraction of \nrandom experiments") +
+    # scale_fill_manual(values=cols,drop=FALSE)+
+    # geom_text(data=pdata,aes(y=cutoff,label=biom),size=2.5)+    # scale_color_manual(values=c('#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#ffff99','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#e31a1c','#b15928','black','#9e0142','#053061'))+
+    # theme(axis.text.x = element_text(size = basesize * 0.6, angle = 60, hjust = 0.5,vjust=0.5, colour = "black"),
+    # axis.text.y = element_text(size = basesize * 0.6, angle = 0, hjust = 0.5,vjust=0.5, colour = "black"), 
+    # strip.text = element_text(size = basesize * 0.8), axis.title=element_text(basesize * 0.8))+
+    # guides(fill='none')
+    # ggsave(p,filename=paste0("../results/Final_results/",net_type[qq],"_BioCRPE_variation.png"),width=4.5, height=2.5, dpi=400)
 
 
     ##--- number of biomarkers figure -------
@@ -400,7 +393,7 @@ for(qq in 3:length(allnets)){
     unknownp <- c()
     x <- c()
     for(j in 1:length(cancer_type)){
-        biocrpes <- openxlsx::read.xlsx(paste0(out_dir,'/BioCRPE_',net_type[qq],'.xlsx'),j)
+        biocrpes <- openxlsx::read.xlsx(paste0(out_dir,'/Supplementary_Table_S4_',net_type[qq],'.xlsx'),j)
         x <- c(x, nrow(biocrpes))
         if(nrow(biocrpes) != 0){
             tempd <- rowSums(is.na(biocrpes[,c(7,8)]))
