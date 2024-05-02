@@ -24,5 +24,5 @@ Rscript 4c_CRPE_biomarker.r
 
 Rscript 5a_PPI_vs_EEI.r
 
-
+Rscript 6_Supplementary_Table_S1.r
 
