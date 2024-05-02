@@ -218,25 +218,4 @@ for(qq in 1:length(allnets)){
     ggsave(p,filename=paste0("../results/Final_results/",net_type[qq],"_unique_KEGG.png"),width=3.5, height=3, dpi=400)
 
 
-    ##--- common KEGG---
-    common_KE <- plyr::count(allKE$GOtermn)
-    common_KE <- common_KE[order(-common_KE$freq),]
-    common_KE <- common_KE[common_KE$freq > 1, ]
-
-    ## q-values of common KEs
-    tempq <- allKE[allKE$GOtermn %in% common_KE[[1]], ][,c(4,5)]
-
-    tempqq <- tempq%>%
-    group_by(GOtermn)%>% 
-    summarise(Mean=mean(qval), Max=max(qval), Min=min(qval), Median=median(qval), Std=sd(qval))
-
-    tempqq <- as.data.frame(tempqq)
-    tempqq <- tempqq[order(tempqq$Median), ]
-
-
-    ## q-values of unique KEs
-    tempq <- allKE[allKE$GOtermn %in% unlist(unique_KE), ][,c(1,4,5)]
-    tempqq <- tempq%>%
-    group_by(temp_cancer)%>% 
-    summarise(Min=min(qval))
-
+   
