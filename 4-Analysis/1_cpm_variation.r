@@ -138,22 +138,20 @@ get_pert_edges <- function(tempf_control, tempf_condition, exons, net_file, alls
 }
 
 
-##-- read all expr data -- to speeed up ---
+##-- read all expr data -- 
 all_expr_data <- list()
 for(j in 1:length(cancer_type)){
 	all_expr_data[[j]] <- data.table::fread(paste0('../data/normalized_exons_sv/', cancer_type[j],'/normalized_all.txt'), header=TRUE)
 }
 
-##-- read all network data -- to speeed up ---
+##-- read all network data -- 
 all_net_data <- data.table::fread(paste0('../data/CONTACT_networks/CONTACT_net_6_1.txt'))
 
-##-- read all manifest data -- to speeed up ---
+##-- read all manifest data --
 all_manifest <- list()
 for(j in 1:length(cancer_type)){
 	all_manifest[[j]] <- data.table::fread(paste0('../data/',cancer_type[j],'_manifest_final.txt'))
 }
-
-
 
 
 ###--- NETLOW ---------------------------------------------------------------
@@ -265,20 +263,20 @@ thres_count_pert$flag <- rep('Perturbed edges', length(thres_count_pert[[1]]))
 
 thres_count <- rbind(thres_count_pert, thres_count_surv)
 
-p <- ggplot(pdata2, aes(Threshold, value, color=variable, group=variable)) + geom_point()+geom_line()+
-theme(legend.text=element_text(size=12))
-basesize <- 15
-p <- p + theme_grey(base_size = basesize * 0.8) + 
-scale_x_continuous(name="Exon expression threshold (normalized CPM value)",breaks = seq(0, 2, by = 0.25)) + 
-scale_y_continuous(name="# of edges",breaks = seq(0, length(net_file[[1]]), by = 2000)) +
-scale_color_manual(values=c('#e41a1c','#377eb8','#4daf4a','#984ea3'))+
-guides(fill=guide_legend(title="Threshold"))+
-facet_wrap(~Cancer, ncol=3, scale='free')+
-theme(axis.text.x = element_text(size = basesize * 0.6, angle = 60, hjust = 0.5,vjust=0.5, colour = "black"),
-axis.text.y = element_text(size = basesize * 0.6, angle = 0, hjust = 0.5,vjust=0.5, colour = "black"), 
-strip.text = element_text(size = basesize * 0.8), axis.title=element_text(basesize * 0.8))+ 
-guides(color=guide_legend(title="Edge type"))
-ggsave(p,filename=paste0("../results/Final_results/NETLOW_EEI_CPM_variation.png"),width=14, height=12, dpi=400)
+# p <- ggplot(pdata2, aes(Threshold, value, color=variable, group=variable)) + geom_point()+geom_line()+
+# theme(legend.text=element_text(size=12))
+# basesize <- 15
+# p <- p + theme_grey(base_size = basesize * 0.8) + 
+# scale_x_continuous(name="Exon expression threshold (normalized CPM value)",breaks = seq(0, 2, by = 0.25)) + 
+# scale_y_continuous(name="# of edges",breaks = seq(0, length(net_file[[1]]), by = 2000)) +
+# scale_color_manual(values=c('#e41a1c','#377eb8','#4daf4a','#984ea3'))+
+# guides(fill=guide_legend(title="Threshold"))+
+# facet_wrap(~Cancer, ncol=3, scale='free')+
+# theme(axis.text.x = element_text(size = basesize * 0.6, angle = 60, hjust = 0.5,vjust=0.5, colour = "black"),
+# axis.text.y = element_text(size = basesize * 0.6, angle = 0, hjust = 0.5,vjust=0.5, colour = "black"), 
+# strip.text = element_text(size = basesize * 0.8), axis.title=element_text(basesize * 0.8))+ 
+# guides(color=guide_legend(title="Edge type"))
+# ggsave(p,filename=paste0("../results/Final_results/NETLOW_EEI_CPM_variation.png"),width=14, height=12, dpi=400)
 
 
 pdatax <- pdata[,-1]
@@ -434,20 +432,20 @@ thres_count_pert$flag <- rep('Perturbed edges', length(thres_count_pert[[1]]))
 
 thres_count <- rbind(thres_count_pert, thres_count_surv)
 
-p <- ggplot(pdata2, aes(Threshold, value, color=variable, group=variable)) + geom_point()+geom_line()+
-theme(legend.text=element_text(size=12))
-basesize <- 15
-p <- p + theme_grey(base_size = basesize * 0.8) + 
-scale_x_continuous(name="Exon expression threshold (normalized CPM value)",breaks = seq(0, 2, by = 0.25)) + 
-scale_y_continuous(name="# of edges",breaks = seq(0, length(net_file[[1]]), by = 2000)) +
-scale_color_manual(values=c('#e41a1c','#377eb8','#4daf4a','#984ea3'))+
-guides(fill=guide_legend(title="Threshold"))+
-facet_wrap(~Cancer, ncol=3, scale='free')+
-theme(axis.text.x = element_text(size = basesize * 0.6, angle = 60, hjust = 0.5,vjust=0.5, colour = "black"),
-axis.text.y = element_text(size = basesize * 0.6, angle = 0, hjust = 0.5,vjust=0.5, colour = "black"), 
-strip.text = element_text(size = basesize * 0.8), axis.title=element_text(basesize * 0.8))+ 
-guides(color=guide_legend(title="Edge type"))
-ggsave(p,filename=paste0("../results/Final_results/NETMEDIUM_EEI_CPM_variation.png"),width=14, height=12, dpi=400)
+# p <- ggplot(pdata2, aes(Threshold, value, color=variable, group=variable)) + geom_point()+geom_line()+
+# theme(legend.text=element_text(size=12))
+# basesize <- 15
+# p <- p + theme_grey(base_size = basesize * 0.8) + 
+# scale_x_continuous(name="Exon expression threshold (normalized CPM value)",breaks = seq(0, 2, by = 0.25)) + 
+# scale_y_continuous(name="# of edges",breaks = seq(0, length(net_file[[1]]), by = 2000)) +
+# scale_color_manual(values=c('#e41a1c','#377eb8','#4daf4a','#984ea3'))+
+# guides(fill=guide_legend(title="Threshold"))+
+# facet_wrap(~Cancer, ncol=3, scale='free')+
+# theme(axis.text.x = element_text(size = basesize * 0.6, angle = 60, hjust = 0.5,vjust=0.5, colour = "black"),
+# axis.text.y = element_text(size = basesize * 0.6, angle = 0, hjust = 0.5,vjust=0.5, colour = "black"), 
+# strip.text = element_text(size = basesize * 0.8), axis.title=element_text(basesize * 0.8))+ 
+# guides(color=guide_legend(title="Edge type"))
+# ggsave(p,filename=paste0("../results/Final_results/NETMEDIUM_EEI_CPM_variation.png"),width=14, height=12, dpi=400)
 
 
 pdatax <- pdata[,-1]
@@ -599,20 +597,20 @@ thres_count_pert$flag <- rep('Perturbed edges', length(thres_count_pert[[1]]))
 
 thres_count <- rbind(thres_count_pert, thres_count_surv)
 
-p <- ggplot(pdata2, aes(Threshold, value, color=variable, group=variable)) + geom_point()+geom_line()+
-theme(legend.text=element_text(size=12))
-basesize <- 15
-p <- p + theme_grey(base_size = basesize * 0.8) + 
-scale_x_continuous(name="Exon expression threshold (normalized CPM value)",breaks = seq(0, 2, by = 0.25)) + 
-scale_y_continuous(name="# of edges",breaks = seq(0, length(net_file[[1]]), by = 2000)) +
-scale_color_manual(values=c('#e41a1c','#377eb8','#4daf4a','#984ea3'))+
-guides(fill=guide_legend(title="Threshold"))+
-facet_wrap(~Cancer, ncol=3, scale='free')+
-theme(axis.text.x = element_text(size = basesize * 0.6, angle = 60, hjust = 0.5,vjust=0.5, colour = "black"),
-axis.text.y = element_text(size = basesize * 0.6, angle = 0, hjust = 0.5,vjust=0.5, colour = "black"), 
-strip.text = element_text(size = basesize * 0.8), axis.title=element_text(basesize * 0.8))+ 
-guides(color=guide_legend(title="Edge type"))
-ggsave(p,filename=paste0("../results/Final_results/NETHIGH_EEI_CPM_variation.png"),width=14, height=12, dpi=400)
+# p <- ggplot(pdata2, aes(Threshold, value, color=variable, group=variable)) + geom_point()+geom_line()+
+# theme(legend.text=element_text(size=12))
+# basesize <- 15
+# p <- p + theme_grey(base_size = basesize * 0.8) + 
+# scale_x_continuous(name="Exon expression threshold (normalized CPM value)",breaks = seq(0, 2, by = 0.25)) + 
+# scale_y_continuous(name="# of edges",breaks = seq(0, length(net_file[[1]]), by = 2000)) +
+# scale_color_manual(values=c('#e41a1c','#377eb8','#4daf4a','#984ea3'))+
+# guides(fill=guide_legend(title="Threshold"))+
+# facet_wrap(~Cancer, ncol=3, scale='free')+
+# theme(axis.text.x = element_text(size = basesize * 0.6, angle = 60, hjust = 0.5,vjust=0.5, colour = "black"),
+# axis.text.y = element_text(size = basesize * 0.6, angle = 0, hjust = 0.5,vjust=0.5, colour = "black"), 
+# strip.text = element_text(size = basesize * 0.8), axis.title=element_text(basesize * 0.8))+ 
+# guides(color=guide_legend(title="Edge type"))
+# ggsave(p,filename=paste0("../results/Final_results/NETHIGH_EEI_CPM_variation.png"),width=14, height=12, dpi=400)
 
 
 pdatax <- pdata[,-1]
