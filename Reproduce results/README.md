@@ -3,8 +3,8 @@ This folder can be used to reproduce the results of the study as follows:
 - Name the data folder as "data"
 - Place the folder "data" in the same directory as the folder "scripts"
 - Go to the "scripts" folder
-- Run the script "runall_analysis.sh" as sh ./runall_analysis.sh on the commandline
-- This will create a folder named "reproduction_results" inside the "data" folder
-- All resutls will be produced int he folder "reproduction_results"
+- Run the script "runall_analysis.sh" as sh ./runall_analysis.sh on commandline terminal
+- This will create a folder named "reproduction_results" inside the "data" folder with all results
+
 
   
