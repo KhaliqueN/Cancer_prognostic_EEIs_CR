@@ -1,4 +1,4 @@
-**This folder can be used to identify perturbed exon-exon interactions (EEIs) given the exon expression and an EEI network**
+**This folder can be used to identify perturbed exon-exon interactions (EEIs) given the exon expression data and an EEI network**
 - There are five subfolders
 - The folders are numbered and should be executed in the ascending order.
 - That is, first execute the scripts within the subfolder "1-contact-based"
