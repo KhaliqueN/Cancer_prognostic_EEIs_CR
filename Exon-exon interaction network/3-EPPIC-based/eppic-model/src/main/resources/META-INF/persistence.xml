@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+	
+	<persistence-unit name="eppicjpa" transaction-type="RESOURCE_LOCAL">
+    	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
+		<!-- we used to have some more parameters before upgrading jpa  
+		<description>Persistence unit for the EPPIC WUI application</description>
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<non-jta-data-source>java:comp/env/jdbc/eppicDB</non-jta-data-source>
+		<class>eppic.model.server.IPForbidden</class>
+		<class>eppic.model.server.IPAllowed</class>
+		<class>eppic.model.server.DataDownloadTracking</class>
+		<validation-mode>NONE</validation-mode>
+		-->
+		<properties>
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+			<!-- Note that this can be overridden in eppic-dbtools via the eppic-db.properties file - JD 2018-04-17 -->
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+		</properties>
+	</persistence-unit>
+	
+	
+</persistence>
