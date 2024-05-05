@@ -543,58 +543,6 @@ netpdb2 <- unique(allData2[[1]])
 netpdb <- union(netpdb1, netpdb2)
 
 finaldata <- rbind(allData2, allData)
-fwrite(finaldata, '../data/processed_complex_finalx.txt', sep='\t', row.names=FALSE, quote=FALSE)
-
-
-
-##---- check which complexes are coorect, using CIF files ----
-## PDB ID 6ehj only has two chains --> A and B, but uniprot map provided by uniprot says that it has D and F chains too....
-# Due to this some (only 1) potential protein complex is wrong
-allpdb <- data.table::fread('../data/processed_complex_finalx.txt')
-pdbDirectory <- '../../project2-PDB_intra/data/PDB_CIF'
-wmap <- c()
-
-for(k in 1:length(allpdb[[1]])){
-
-	temp_chains <- union(allpdb$CHAIN1[k],allpdb$CHAIN2[k])
-	tfile <- readLines(paste0(pdbDirectory,"/",allpdb$ID[k],".cif"))
-
-	# Extract start and end positions of the coordinates entries
-	wh <- which(tfile == "loop_")+1
-	tfile0 <- trimws(tfile[wh])
-	whh1 <- which(tfile0 == "_atom_site.group_PDB")
-	start <- wh[whh1]
-	end <- wh[whh1+1]-1-2
-	# end <- start+25
-
-
-	# Extract the coordinates part of the PDB file
-	tfile <- tfile[start:end]
-	lineID <- word(tfile, 1)
-	wh <- which(lineID == "ATOM" | lineID == "HETATM")
-
-	# Extract the field entries
-	whf <- setdiff(seq(1,max(wh)), wh)
-	fields <- trimws(tfile[whf])
-
-	tfile1 <- trimws(tfile[wh])
-	tfile2 <- read.table(textConnection(tfile1), sep='', colClasses = "character")
-
-	chainPosition <- which(fields == "_atom_site.auth_asym_id")#_atom_site.label_asym_id
-	chain <- tfile2[[chainPosition]]
-	chains <- unique(chain)
-
-	tempsol <- setdiff(temp_chains, chains)
-
-	if(length(tempsol) != 0){
-		wmap <- c(wmap, k)
-	}
-	cat(k,' of ', length(allpdb[[1]]), ' done\n')
-
-}
-
-
-final_data1 <- allpdb[-wmap,]
 fwrite(finaldata, '../data/processed_complex_final.txt', sep='\t', row.names=FALSE, quote=FALSE)
 
 
