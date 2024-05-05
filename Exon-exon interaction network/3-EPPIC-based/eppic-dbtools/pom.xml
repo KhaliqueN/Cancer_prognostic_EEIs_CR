@@ -1,0 +1,157 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                                      http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.eppic-web</groupId>
+		<artifactId>eppic</artifactId>
+		<version>3.3.11-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>eppic-dbtools</artifactId>
+	<packaging>jar</packaging>
+
+	<dependencies>
+
+		<!-- main dependency: eppic model package -->
+		<dependency>
+			<groupId>org.eppic-web</groupId>
+			<artifactId>eppic-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.validator.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+
+		<!-- logging -->
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- binding for log4j 2 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- Log4j API and Core implementation required for binding -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- util package for some utilities and biojava -->
+		<dependency>
+			<groupId>org.eppic-web</groupId>
+			<artifactId>eppic-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		
+		<dependency>
+			<groupId>gnu.getopt</groupId>
+			<artifactId>java-getopt</artifactId>
+			<version>1.0.13</version>
+		</dependency>
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+			</plugin>
+			<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-jar-plugin</artifactId>
+        		<version>2.4</version>
+        		<configuration>
+			    	<archive>
+            			<manifest>
+              				<addClasspath>true</addClasspath>
+							<mainClass>eppic.db.tools.Main</mainClass>
+            			</manifest>
+          			</archive>
+		        </configuration>
+			</plugin>
+			
+				<!-- the shade plugin to repack all jars into one uber-jar -->			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+
+	              			<filters>
+        						<filter>
+        							<!-- solution to the signature repackaging problem is this filter: exclude the signatures!  -->
+            						<artifact>*:*</artifact>
+            						<excludes>
+                						<exclude>META-INF/*.SF</exclude>
+                						<exclude>META-INF/*.DSA</exclude>
+                						<exclude>META-INF/*.RSA</exclude>
+            						</excludes>
+        						</filter>
+    						</filters>
+           				</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<finalName>uber-${project.artifactId}-${project.version}</finalName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
