@@ -1,8 +1,15 @@
-# EEI-cancer-study
-Scripts to generate data and produce results of the study: "A pan-cancer analysis of the prognostic importance of exon-exon interactions"
+## This repository contains scripts to gnerate data and results in the paper:
+- There are four folder explained as follows:
 
-There are four folders as follows:
-- "1-Create-network": Scripts to download data from the Protein Data Bank and generate exon-exon interaction (EEI) networks
-- "2-Compute-exon-expression":Scripts to download data from The Cancer Genome Atlas and generate expressions of exons
-- "3-Compute-perturbedEdges": Scripts to identify cancer relevant perturbed EEIs
-- "4-Analysis": Scripts to generate results shown in the paper and the supplement
+**Reproduce results**
+- Contains scripts and data to reproduce the results of the paper
+  
+**Exon expressions**
+- Contains scripts to download and process gene expression data from TCGA
+  
+**Exon-exon interaction networks**
+- Contains scripts to create Exon-exon interaction (EEI) networks
+  
+**Perturbed edges**
+- Contains scripts to identify perturbed EEIs given the exon expression data and an EEI network
+
