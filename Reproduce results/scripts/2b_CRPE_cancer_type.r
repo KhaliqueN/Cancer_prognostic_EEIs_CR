@@ -36,9 +36,6 @@ anet <- mapProtein(anet[[1]], anet[[2]], data.table::fread('../data/final_EEINs/
 aq <- rbind(gnet, anet)
 unet <- rbind(aq, enet)
 
-temp_bar_limitl <- 50
-temp_bar_limit <- 500
-temp_y_limit <- 1400
 temp_x_limit <- 5000
 
 for(qq in 1:length(allnets)){
@@ -50,6 +47,11 @@ for(qq in 1:length(allnets)){
     }else if(qq==2){
         temp_y_limit <- 3000
         temp_bar_limitl <- 300
+        temp_bar_limit <- 1000
+    }else{
+        temp_bar_limitl <- 50
+        temp_y_limit <- 1400
+        temp_bar_limit <- 500
     }
 
     ppi_count <- c()

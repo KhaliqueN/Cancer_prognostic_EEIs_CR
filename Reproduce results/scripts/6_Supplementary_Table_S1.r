@@ -48,46 +48,40 @@ cppFunction("List getpropa(CharacterVector ex1, CharacterVector ex2, CharacterVe
 }")
 
 
-cancer_type <- gtools::mixedsort(c('BLCA', 'BRCA', 'KIRC', 'HNSC', 'KIRP', 'LIHC', 'LUAD', 'LUSC', 
-    'UCEC', 'THCA', 'COAD', 'PRAD', 'KICH', 'STAD', 'ESCA'))
+save_dir <- '../data/reproduction_results'
+dir.create(save_dir)
 
+cancer_type <- gtools::mixedsort(c('BLCA', 'BRCA', 'KIRC', 'HNSC', 'KIRP', 'LIHC', 'LUAD', 'LUSC', 'UCEC', 'THCA', 'COAD', 'PRAD', 'KICH', 'STAD', 'ESCA'))
+cpm_threshold <- 0.5
+allnets <- gtools::mixedsort(list.files('../data/CRPES',full.names=TRUE))
 net_type <- c('NETLOW', 'NETMEDIUM', 'NETHIGH')
 
-outdir <- '../results/Final_results'
-allnets <- gtools::mixedsort(list.files('../data/Final_networks/level1',full.names=TRUE))
-cpm_threshold <- 0.5
 
-gnet <- data.table::fread(paste0('../data/PISA_survival/PISA_net_final_',cpm_threshold,'.txt'), header=FALSE)
-gnet <- mapProtein(gnet[[1]], gnet[[2]], data.table::fread('../data/PISA_networks_filtered/PISA_EEIN_0.5.txt'))
-gnetx <- gnet[,c(1,2,5,6)]
+gnet <- data.table::fread(paste0('../data/PISA_survival_filt/PISA_net_final_',cpm_threshold,'.txt'), header=FALSE)
+gnet <- mapProtein(gnet[[1]], gnet[[2]], data.table::fread('../data/final_EEINs/PISA.txt'))
 
-enet <- data.table::fread(paste0('../data/EPPIC_survival/EPPIC_net_final_',cpm_threshold,'.txt'), header=FALSE)
-enet <- mapProtein(enet[[1]], enet[[2]], data.table::fread('../data/EPPIC_EEIN_filtered.txt'))
-enetx <- enet[,c(1,2,5,6)]
+enet <- data.table::fread(paste0('../data/EPPIC_survival_filt/EPPIC_net_final_',cpm_threshold,'.txt'), header=FALSE)
+enet <- mapProtein(enet[[1]], enet[[2]], data.table::fread('../data/final_EEINs/EPPIC.txt'))
 
-anet <- data.table::fread(paste0('../data/CONTACT_survival/CONTACT_net_final_',cpm_threshold,'.txt'), header=FALSE)
-xxp <- data.table::fread('../data/CONTACT_networks/CONTACT_net_6_1.txt')
-xxp$p1 <- unlist(lapply(strsplit(xxp[[1]],'[_]'),'[[',1))
-xxp$p2 <- unlist(lapply(strsplit(xxp[[2]],'[_]'),'[[',1))
-xxp <- xxp[, -c(1,2)]
-anet <- mapProtein(anet[[1]], anet[[2]], xxp)
-anetx <- anet[, c(1,2,10,11)]
-colnames(anetx) <- c('exon1','exon2','protein1','protein2')
+anet <- data.table::fread(paste0('../data/CONTACT_survival_filt/CONTACT_net_final_',cpm_threshold,'.txt'), header=FALSE)
+anet <- mapProtein(anet[[1]], anet[[2]], data.table::fread('../data/final_EEINs/CONTACT.txt'))
 
-aq <- rbind(gnetx, anetx)
-unet <- rbind(aq, enetx)
+aq <- rbind(gnet, anet)
+unet <- rbind(aq, enet)
+
+
 
 ##-------- for survival analysis edges -------------------------
 for(qq in 1:length(allnets)){
 
-    indir <- paste0('../data/Final_survival/level1/',strsplit(basename(allnets[qq]),'[.]')[[1]][1],'/threshold_',cpm_threshold)
-    in_dir <- paste0('../data/Final_weighted_networks/level1/',strsplit(basename(allnets[qq]),'[.]')[[1]][1])
+    indir <- paste0('../data/Final_survival_filt/',strsplit(basename(allnets[qq]),'[.]')[[1]][1],'/threshold_',cpm_threshold)
+    in_dir <- paste0('../data/Final_weighted_networks_filt/',strsplit(basename(allnets[qq]),'[.]')[[1]][1])
 
     #-- save excel file ---
-    wb1 <- openxlsx::createWorkbook(paste0(outdir,'/Supplementary_Table_1_',strsplit(basename(net_type[qq]),
+    wb1 <- openxlsx::createWorkbook(paste0(save_dir,'/Supplementary_Table_S1_',strsplit(basename(net_type[qq]),
         '[.]')[[1]][1],'.xlsx'))
-    openxlsx::saveWorkbook(wb1, paste0(outdir,'/Supplementary_Table_1_',strsplit(basename(net_type[qq]),
-        '[.]')[[1]][1],'.xlsx'), overwrite=T)
+    # openxlsx::saveWorkbook(wb1, paste0(save_dir,'/Supplementary_Table_1_',strsplit(basename(net_type[qq]),
+    #     '[.]')[[1]][1],'.xlsx'), overwrite=T)
 
     for(k in 1:length(cancer_type)){
 
@@ -130,11 +124,11 @@ for(qq in 1:length(allnets)){
         xx$gained_in_patient <- t5$gained_in_patient
         xx$lost_in_patient <- t5$lost_in_patient
 
-        wb <- openxlsx::loadWorkbook(paste0(outdir,'/Supplementary_Table_1_',strsplit(basename(net_type[qq]),
-            '[.]')[[1]][1],'.xlsx'))
-        openxlsx::addWorksheet(wb, sheetName = c_type)
-        openxlsx::writeData(wb, sheet = c_type, xx)
-        openxlsx::saveWorkbook(wb, paste0(outdir,'/Supplementary_Table_1_',strsplit(basename(net_type[qq]),
+        # wb <- openxlsx::loadWorkbook(paste0(outdir,'/Supplementary_Table_1_',strsplit(basename(net_type[qq]),
+        #     '[.]')[[1]][1],'.xlsx'))
+        openxlsx::addWorksheet(wb1, sheetName = c_type)
+        openxlsx::writeData(wb1, sheet = c_type, xx)
+        openxlsx::saveWorkbook(wb1, paste0(save_dir,'/Supplementary_Table_S1_',strsplit(basename(net_type[qq]),
             '[.]')[[1]][1],'.xlsx'), overwrite = T)
         
     }

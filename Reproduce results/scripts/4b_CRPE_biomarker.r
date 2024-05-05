@@ -22,7 +22,7 @@ net_type <- c('NETLOW', 'NETMEDIUM', 'NETHIGH')
 
 for(qq in 3:length(allnets)){
 
-    biocrpes <- readRDS(paste0(net_type[qq],"_biocrpe.Rds"))
+    biocrpes <- readRDS(paste0('../data/reproduction_results/',net_type[qq],"_biocrpe.Rds"))
 
 
 	for(k in 1:length(cancer_type)){

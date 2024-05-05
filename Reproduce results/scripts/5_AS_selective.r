@@ -110,7 +110,7 @@ for(qq in 1:length(allnets)){
     fdata <- data.frame(matrix(ncol=8, nrow=0))
     qdata <- data.frame(matrix(ncol=3, nrow=0))
 
-    wb1 <- openxlsx::createWorkbook(paste0(save_dir,'/Supplementary_Table_2_',net_type[qq],'.xlsx'))
+    wb1 <- openxlsx::createWorkbook(paste0(save_dir,'/Supplementary_Table_S2_',net_type[qq],'.xlsx'))
     mdn <- c()
 
     for(k in 1:length(cancer_type)){
@@ -239,7 +239,7 @@ for(qq in 1:length(allnets)){
         ## save excel sheet ----
         openxlsx::addWorksheet(wb1, sheetName = cancer_type[k])
         openxlsx::writeData(wb1, sheet = cancer_type[k], save_ex)
-        openxlsx::saveWorkbook(wb1, paste0(save_dir,'/Supplementary_Table_2_',net_type[qq],'.xlsx'), overwrite = T)
+        openxlsx::saveWorkbook(wb1, paste0(save_dir,'/Supplementary_Table_S2_',net_type[qq],'.xlsx'), overwrite = T)
     }
 
 
