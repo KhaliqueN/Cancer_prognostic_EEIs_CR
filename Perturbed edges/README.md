@@ -1,8 +1,10 @@
 **This folder can be used to identify perturbed exon-exon interactions (EEIs) given the exon expression and an EEI network**
-- Put the path to the token in line 14 of the "1_downloadBAM_alignReads.r" script
-- Run the script "run_all.sh" as sh ./run_all.sh to download the .bam files and otain counts of exon expressions
-- After the above script is finished running, run sh ./run_all_nm.sh to normalize the exon counts
-- The results will be generated in the "data" folder
-- Folder "../data/featureCounts_exons/" will contain exon counts
-- Folder "../data/normalized_exons_sv/" will contain normalized exon counts
+- There are five subfolders
+- The folders are numbered and should be executed in the ascending order.
+- That is, first execute the scripts within the subfolder "1-contact-based"
+- Then, execute the scripts within the subfolder "2-PISA-based"
+- Then, execute the scripts within the subfolder "3-EPPIC-based"
+- Then, execute the scripts within the subfolder "4-final_nets"
+- Lastly, execute the scripts within the subfolder "5-Survival-analysis"
+- Within a subfolder, the scripts should be executed in the numbered order or used sh ./run_all.sh to run all scripts within a subfolder
 
