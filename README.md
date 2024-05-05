@@ -1,4 +1,4 @@
-## This repository contains scripts to gnerate data and results in the paper:
+# This repository contains scripts to generate data and results in the paper:
 - There are four folder explained as follows:
 
 **Reproduce results**
