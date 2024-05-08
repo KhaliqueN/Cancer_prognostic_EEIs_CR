@@ -1,4 +1,5 @@
-This repository contains scripts to generate data and results in the following paper:<\br>
+This repository contains scripts to generate data and results in the following paper:
+
 **Prognostic importance of splicing-triggered aberrations of protein complex interfaces in cancer, Khalique Newaz, Jan Baumbach, and Dmitrij Frishman, under review.**
 
 - There are four folder explained as follows:
