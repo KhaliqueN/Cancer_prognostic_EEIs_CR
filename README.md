@@ -1,18 +1,14 @@
 This repository contains scripts to generate data and results in the following paper:
 
-**Prognostic importance of splicing-triggered aberrations of protein complex interfaces in cancer, Khalique Newaz, Jan Baumbach, and Dmitrij Frishman, under review.**
+Prognostic importance of splicing-triggered aberrations of protein complex interfaces in cancer, under review.
 
-There are four folders explained as follows:
+**The code in the scripts folder can be used to reproduce the results of the study as follows:**
+- Download the data from here:
+- Name the data folder as "data"
+- Place the folder "data" in the same directory as the folder "scripts"
+- Go to the "scripts" folder
+- Run the script "runall_analysis.sh" as sh ./runall_analysis.sh on commandline terminal
+- Alternatively, the R scripts cam be run individually in the order indicated within the "runall_analysis.sh" file
+- This will create a folder named "reproduction_results" inside the "data" folder with all results
 
-**Reproduce results**
-- Contains scripts and data to reproduce the results of the paper
-  
-**Exon expressions**
-- Contains scripts to download and process gene expression data from TCGA
-  
-**Exon-exon interaction networks**
-- Contains scripts to create Exon-exon interaction (EEI) networks
-  
-**Perturbed edges**
-- Contains scripts to identify perturbed EEIs given the exon expression data and an EEI network
 
